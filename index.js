@@ -22,9 +22,9 @@ function validateQA (commitValue) {
     
    // QA1 @ AG1 @ AQA1 @ Quality
    //Eendpoint @ apigee @ Auth0  @ Environment
-     let variantVar = text.indexOf("variantFlavor:");
-     let closeString = text.indexOf("&&");
-     let flavorValue = text.substring(variantVar + 14, closeString);
+     let variantVar = commitValue.indexOf("variantFlavor:");
+     let closeString = commitValue.indexOf("&&");
+     let flavorValue = commitValue.substring(variantVar + 14, closeString);
   
         console.log(`commitMessage function -->  ${commitValue} <---`);
          
