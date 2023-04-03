@@ -7,6 +7,8 @@ const versionCodeRegexPattern = /(versionCode(?:\s|=)*)(.*)/;
 // versionName — A string used as the version number shown to users [...] -> https://developer.android.com/studio/publish/versioning
 const versionNameRegexPattern = /(versionName(?:\s|=)*)(.*)/;
 
+const environmentRegexPattern = /(variantFlavor(?:\s|=)*)(.*)/;
+
 function validateQA (commitValue) {
      // se debe reciir lo sigueinte : QA1@AG1@AQA1@Quality
      // salidas:
@@ -68,7 +70,6 @@ function validateQA (commitValue) {
   return "";
 };
 
-
 try {
     const platform = core.getInput('platform');
     if (platform === 'android') {
@@ -78,8 +79,10 @@ try {
         const versionName = core.getInput('versionNumber');
         //commit message
         const commitMessage = core.getInput('commitMessage');
+        //configuration selected
+        const configurationValue = core.getInput('configuration');
         
-        validateQA(commitMessage);
+        validateQA(configurationValue);
    
         
         let versionParts = versionName.split('.');
