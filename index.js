@@ -81,6 +81,11 @@ try {
          
         if (environmentRegexPattern.test(commitMessage)) {
              validateQA(commitMessage);
+        } else if (environmentRegexPattern.test(configurationValue)) {
+             validateQA(configurationValue);
+        } else {
+             console.log(`Error no contiene el formato correcto ejemplo: (variantFlavor:QA1@AG1@AQA1@Quality@&&)}`);
+             return
         }
         
         let versionParts = versionName.split('.');
