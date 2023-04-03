@@ -16,7 +16,11 @@ inputs:
   commitMessage:  # id of input
     description: 'Commit message '
     required: true
-    default: 'message'       
+    default: 'message'
+  configuration:  # id of input
+    description: 'Configuration selected '
+    required: false
+    default: 'some message'  
 outputs:
   new-version-number: # id of output
     description: 'The new version number' 
