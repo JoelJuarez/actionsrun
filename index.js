@@ -22,10 +22,13 @@ function validateQA (commitValue) {
     
    // QA1 @ AG1 @ AQA1 @ Quality
    //Eendpoint @ apigee @ Auth0  @ Environment
+     let variantVar = text.indexOf("variantFlavor:");
+     let closeString = text.indexOf("&&");
+     let flavorValue = text.substring(variantVar + 14, closeString);
   
         console.log(`commitMessage function -->  ${commitValue} <---`);
          
-        let data  = commitValue.split('@');
+        let data  = flavorValue.split('@');
         if (data.length > 0) {
             let endpoint = data[0]
             let apigee = data[1]
