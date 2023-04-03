@@ -76,7 +76,7 @@ try {
         //configuration selected
         const configurationValue = core.getInput('configuration');
          
-        if (commitMessage.includes(environmentRegexPattern)) {
+        if (commitMessage.test(environmentRegexPattern)) {
              validateQA(commitMessage);
         }
         
