@@ -23,14 +23,8 @@ function validateQA (commitValue) {
    // QA1 @ AG1 @ AQA1 @ Quality
    //Eendpoint @ apigee @ Auth0  @ Environment
   
-    
         console.log(`commitMessage function -->  ${commitValue} <---`);
-            if (!commitValue.includes("@")) {
-                core.setOutput( "assemble_value",``);
-                core.setOutput( "final_path_apk",``);
-                return
-             }
-    
+         
         let data  = commitValue.split('@');
         if (data.length > 0) {
             let endpoint = data[0]
@@ -81,9 +75,10 @@ try {
         const commitMessage = core.getInput('commitMessage');
         //configuration selected
         const configurationValue = core.getInput('configuration');
-        
-        validateQA(configurationValue);
-   
+         
+        if (commitMessage.includes(environmentRegexPattern)) {
+             validateQA(commitMessage);
+        }
         
         let versionParts = versionName.split('.');
         let finalNewVersion = '';
