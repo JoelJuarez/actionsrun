@@ -81,7 +81,7 @@ try {
         //configuration selected
         const configurationValue = core.getInput('configuration');
          
-        const numberVersion = core.getInput('numberVersion');
+        const inputVersion = core.getInput('numberVersion');
          
         if (environmentRegexPattern.test(commitMessage)) {
              validateQA(commitMessage);
@@ -92,8 +92,11 @@ try {
              return
         }
         var versionParts = versionName.split('.');
-        if (numberVersion != '' && numberVersion.includes('v') ) {
-           versionParts = numberVersion.split('.');
+        if (inputVersion != '' && inputVersion.includes('v') ) {
+             console.log(`succes : ... ${inputVersion}`);
+           versionParts = inputVersion.split('.');
+        }else {
+             console.log(`Error : ... ${versionParts}`);
         }
         
         let finalNewVersion = '';
