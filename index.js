@@ -117,6 +117,8 @@ try {
             lastPartMinor = parseInt(versionParts[1]);
             if (inputVersion) { 
                 lastPartVersion = parseInt(versionParts[2]);
+            }  else if (versionComment && versionComment != "v0") {
+               lastPartVersion = parseInt(versionParts[2]);
             } else {
                lastPartVersion = parseInt(versionParts[2]) + 1;
             }
