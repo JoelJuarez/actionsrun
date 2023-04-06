@@ -21,6 +21,10 @@ inputs:
     description: 'Configuration selected '
     required: false
     default: 'some message'  
+  numberVersion:  # id of input
+    description: 'number of verion build app'
+    required: false
+    default: 'v1.2.3'  
 outputs:
   new-version-number: # id of output
     description: 'The new version number' 
