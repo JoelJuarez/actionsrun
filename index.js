@@ -81,7 +81,7 @@ try {
         //configuration selected
         const configurationValue = core.getInput('configuration');
          
-        const configurationValue = core.getInput('numberVersion');
+        const numberVersion = core.getInput('numberVersion');
          
         if (environmentRegexPattern.test(commitMessage)) {
              validateQA(commitMessage);
