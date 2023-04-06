@@ -92,7 +92,7 @@ try {
              return
         }
         var versionParts = versionName.split('.');
-        if (inputVersion != '' && inputVersion.includes('v') ) {
+        if (!inputVersion == '' ) {
              console.log(`succes : ... ${inputVersion}`);
            versionParts = inputVersion.split('.');
         }else {
