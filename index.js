@@ -95,7 +95,7 @@ try {
         if (inputVersion) {
              console.log(`succes : ... ${inputVersion}`);
          var versionParts = inputVersion.split('.');
-        }else {
+        } else {
              console.log(`Error : ... ${versionParts}`);
         }
         
@@ -109,7 +109,11 @@ try {
         if(newVersionParts.length > 0) {
             lastPartMayor = parseInt(versionParts[0].substring(1));
             lastPartMinor = parseInt(versionParts[1]);
-            lastPartVersion = parseInt(versionParts[2]) + 1;
+            if (inputVersion) { 
+                lastPartVersion = parseInt(versionParts[2]);
+            } else {
+               lastPartVersion = parseInt(versionParts[2]) + 1;
+            }
           
             if(lastPartVersion > 99) {
                 lastPartVersion = 0;
