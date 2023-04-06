@@ -91,8 +91,11 @@ try {
              console.log(`Error no contiene el formato correcto ejemplo: (variantFlavor:QA1@AG1@AQA1@Quality@&&)}`);
              return
         }
+         let versionParts = versionName.split('.');
+        if (numberVersion != '' && numberVersion.includes('v') ) {
+           versionParts = numberVersion.split('.');
+        }
         
-        let versionParts = versionName.split('.');
         let finalNewVersion = '';
         let newVersionParts = versionParts[versionParts.length -1];
 
