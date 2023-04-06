@@ -35,6 +35,7 @@ function validateQA (commitValue) {
             let apigee = data[1]
             let auth = data[2]
             let environment = data[3]
+            let newVersion = data[4]
             let assemble = "assemble"
             
             assemble += endpoint
@@ -62,7 +63,8 @@ function validateQA (commitValue) {
             
             console.log(`finalPath ---> ${finalPath} <---`); 
             core.setOutput( "final_path_apk",`${finalPath}`);
-            
+     
+             return newVersion
         }
     
   return "";
@@ -82,19 +84,23 @@ try {
          
         const inputVersion = core.getInput('numberVersion');
          
+         var versionComment = 0
         if (environmentRegexPattern.test(commitMessage)) {
-             validateQA(commitMessage);
+          var  versionComment = validateQA(commitMessage);
         } else if (environmentRegexPattern.test(configurationValue)) {
-             validateQA(configurationValue);
+           var  versionComment =  validateQA(configurationValue);
         } else {
              console.log(`Error no contiene el formato correcto ejemplo: (variantFlavor:QA1@AG1@AQA1@Quality@&&)}`);
              return
         }
+         
         var versionParts = versionName.split('.');
-         console.log(`inputVersion : ... ${inputVersion}`);
+         console.log(`versionComment : ... ${versionComment}`);
         if (inputVersion) {
              console.log(`succes : ... ${inputVersion}`);
          var versionParts = inputVersion.split('.');
+        } else if (versionComment != "v0") {
+              var versionParts = versionComment.split('.');
         } else {
              console.log(`Error : ... ${versionParts}`);
         }
