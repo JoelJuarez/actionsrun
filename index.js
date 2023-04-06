@@ -8,6 +8,8 @@ const versionCodeRegexPattern = /(versionCode(?:\s|=)*)(.*)/;
 const versionNameRegexPattern = /(versionName(?:\s|=)*)(.*)/;
 
 const environmentRegexPattern = /(variantFlavor(?:\s|=)*)(.*)/;
+//Number of version 
+const numberVersion = /(v:(?:\s|=)*)(.*)/;
 
 function validateQA (commitValue) {
      // se debe reciir lo sigueinte : QA1@AG1@AQA1@Quality
@@ -78,6 +80,8 @@ try {
         const commitMessage = core.getInput('commitMessage');
         //configuration selected
         const configurationValue = core.getInput('configuration');
+         
+        const configurationValue = core.getInput('numberVersion');
          
         if (environmentRegexPattern.test(commitMessage)) {
              validateQA(commitMessage);
