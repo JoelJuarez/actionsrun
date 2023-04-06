@@ -8,8 +8,7 @@ const versionCodeRegexPattern = /(versionCode(?:\s|=)*)(.*)/;
 const versionNameRegexPattern = /(versionName(?:\s|=)*)(.*)/;
 
 const environmentRegexPattern = /(variantFlavor(?:\s|=)*)(.*)/;
-//Number of version 
-const numberVersion = /(v:(?:\s|=)*)(.*)/;
+
 
 function validateQA (commitValue) {
      // se debe reciir lo sigueinte : QA1@AG1@AQA1@Quality
@@ -92,9 +91,10 @@ try {
              return
         }
         var versionParts = versionName.split('.');
-        if (!inputVersion == '' ) {
+         console.log(`inputVersion : ... ${inputVersion}`);
+        if (inputVersion) {
              console.log(`succes : ... ${inputVersion}`);
-           versionParts = inputVersion.split('.');
+         var versionParts = inputVersion.split('.');
         }else {
              console.log(`Error : ... ${versionParts}`);
         }
