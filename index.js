@@ -97,6 +97,15 @@ try {
         
          const appVersion = core.getInput('aplication');
         
+         
+       if (appVersion == "Pocket") {
+            console.log(`Flow Pocket ******** `);
+       } else if (appVersion == "PosMovil") {
+            console.log(`Flow PosMovil ******** `);
+       } else {
+            console.log(`Error  ******** ${appVersion} nos existe el app`);
+       }
+        
             
         var versionComment = 0
         if (environmentRegexPattern.test(commitMessage)) {
@@ -193,92 +202,6 @@ try {
             });
         });
     }
-
-}
-
-function versionPosMovil() {
-     
-}
-
-
-function validateQA (commitValue) {
-     // se debe recibir lo sigueinte : variantFlavor:SIT1@SITAG1@ASIT2@Sit@v8.7.8@&&
-     // salidas:
-     // Assemble: -assembleQA1AG1AQA1Quality
-     // path apk : - QA1AG1ADEB1/quality/app-QA1-AG1-ADEB1-quality.apk
-     // Donde : 
-       // QA1      - 0 Eendpoint
-       // @AG1     - 1 apigee
-       // @AQA1    - 2 Auth0 path
-       // @Quality - 3 Environment
-       // @Quality - 4 version app
-    
-
-   //Eendpoint @ apigee @ Auth0  @ Environment @version
-     let variantVar = commitValue.indexOf("variantFlavor:");
-     let closeString = commitValue.indexOf("&&");
-     let flavorValue = commitValue.substring(variantVar + 14, closeString);
-  
-        console.log(`commitMessage function -->  ${commitValue} <---`);
-         
-        let data  = flavorValue.split('@');
-        if (data.length > 0) {
-            let endpoint = data[0]
-            let apigee = data[1]
-            let auth = data[2]
-            let environment = data[3]
-            let newVersion = data[4]
-            let assemble = "assemble"
-            
-            assemble += endpoint
-            assemble += apigee
-            assemble += auth
-            assemble += environment
-            
-            console.log(`assembleValue ---> ${assemble} <---`); 
-            
-            core.setOutput( "assemble_value",`${assemble}`);
-            
-           // Creando path QA1 AG1 ADEB1 /quality/app-QA1-AG1-ADEB1-quality.apk
-            
-            let finalPath = ""
-            finalPath += endpoint + "" + apigee + "" + auth
-            finalPath += "/"
-            finalPath += environment.charAt(0).toLowerCase() + environment.slice(1)
-             finalPath += "/"
-            finalPath += "app-"
-            finalPath += endpoint + "-"
-            finalPath += apigee + "-"
-            finalPath += auth + "-"
-            finalPath += environment.charAt(0).toLowerCase() + environment.slice(1)
-            finalPath += ".apk"
-            
-            console.log(`finalPath ---> ${finalPath} <---`); 
-            core.setOutput( "final_path_apk",`${finalPath}`);
-     
-             return newVersion
-        }
-    
-  return "";
-};
-
-try {
-    const platform = core.getInput('platform');
-    if (platform === 'android') {
-    
-        
-         
-       if (appVersion == "Pocket") {
-            console.log(`Flow Pocket ******** `);
-            versionPocket();
-       } else if (appVersion == "PosMovil") {
-            console.log(`Flow PosMovil ******** `);
-            versionPosMovil();
-       } else {
-            console.log(`Error  ******** ${appVersion} nos existe el app`);
-       }
-       
-         
 } catch (error) {
     core.setFailed(error.message);
 }
