@@ -73,6 +73,7 @@ function validateQA (commitValue) {
 
 try {
     const platform = core.getInput('platform');
+    getPosApp()
     if (platform === 'android') {
         // path del gradle
         const gradlePath = core.getInput('gradlePath');
