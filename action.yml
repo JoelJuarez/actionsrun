@@ -24,6 +24,10 @@ inputs:
   numberVersion:  # id of input
     description: 'number of verion build app'
     required: false
+  aplication:  # id of input
+    description: 'name aplication'
+    required: true
+    
 outputs:
   new-version-number: # id of output
     description: 'The new version number' 
