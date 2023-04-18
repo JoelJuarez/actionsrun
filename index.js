@@ -12,11 +12,128 @@ const environmentRegexPattern = /(variantFlavor(?:\s|=)*)(.*)/;
 
 
 function versionPocket () {
+        try {
+        const platform = core.getInput('platform');
+        if (platform === 'android') {
+            // path del gradle
+            const gradlePath = core.getInput('gradlePath');
+            //version actual
+            const versionName = core.getInput('versionNumber');
+            //commit message
+            const commitMessage = core.getInput('commitMessage');
+            //configuration selected
+            const configurationValue = core.getInput('configuration');
+             
+            const inputVersion = core.getInput('numberVersion');
+            
+             const appVersion = core.getInput('aplication');
+            
+                  
+                
+            var versionComment = 0
+            if (environmentRegexPattern.test(commitMessage)) {
+              var  versionComment = validateQA(commitMessage);
+            } else if (environmentRegexPattern.test(configurationValue)) {
+               var  versionComment =  validateQA(configurationValue);
+            } else {
+                 console.log(`Error no contiene el formato correcto ejemplo: (variantFlavor:QA1@AG1@AQA1@Quality@&&)}`);
+                 return
+            }
+             
+            var versionParts = versionName.split('.');
+             console.log(`versionComment : ... ${versionComment}`);
+            if (inputVersion) {
+                 console.log(`succes : ... ${inputVersion}`);
+             var versionParts = inputVersion.split('.');
+            } else if (versionComment != "v0") {
+                  var versionParts = versionComment.split('.');
+            } else {
+                 console.log(`Error : ... ${versionParts}`);
+            }
+            
+            let finalNewVersion = '';
+            let newVersionParts = versionParts[versionParts.length -1];
 
-}
+            let lastPartMayor = 1;
+            let lastPartMinor = 0;
+            let lastPartVersion = 0;
+            
+            if(newVersionParts.length > 0) {
+                lastPartMayor = parseInt(versionParts[0].substring(1));
+                lastPartMinor = parseInt(versionParts[1]);
+                if (inputVersion) { 
+                    lastPartVersion = parseInt(versionParts[2]);
+                }  else if (versionComment && versionComment != "v0") {
+                   lastPartVersion = parseInt(versionParts[2]);
+                } else {
+                   lastPartVersion = parseInt(versionParts[2]) + 1;
+                }
+              
+                if(lastPartVersion > 99) {
+                    lastPartVersion = 0;
+                    lastPartMinor = lastPartMinor + 1;
+                    if(lastPartMinor > 99) {
+                        lastPartMinor = 0;
+                        lastPartMayor = lastPartMayor + 1;
+                    }
+                }
+                finalNewVersion = `${lastPartMayor}.${lastPartMinor}.${lastPartVersion}`;
+            }
+
+            let versionCode = '';
+            let versionFinalParts = finalNewVersion.split('.');
+            
+            versionFinalParts.forEach(element => {
+                let newPart = element;
+                if(element.length === 1) {
+                    newPart = `${element}0`;
+                }
+                versionCode = `${versionCode}${newPart}`;
+            });
+
+            fs.readFile(gradlePath, 'utf8', function (err, data) {
+             
+                if(!data) {
+                     console.log(`data is Empty ${data}`);
+                    console.log(`Error : ... ${err}`);
+                return
+                }
+                
+                newGradle = data;
+                if (versionCode.length > 0)
+                    newGradle = newGradle.replace(versionCodeRegexPattern, `$1${versionCode}`);
+                if (versionName.length > 0){
+                    newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${finalNewVersion}\"`);
+                    console.log(`finalNewVersion: ${finalNewVersion}`);
+                    core.setOutput( "new-version-number",`v${finalNewVersion}`);
+                }
+                    
+                fs.writeFile(gradlePath, newGradle, function (err) {
+                    if (err) throw err;
+                    if (versionCode.length > 0) {
+                         console.log(`Successfully override versionCode ${versionCode}`)
+                         console.log(`Version Name : ${versionCode}`);
+                    }
+                       
+                 
+                    if (versionName.length > 0){
+                        console.log(`Successfully override versionName ${versionName}`)
+                        console.log(`Version Name : ${versionName}`);
+                    }
+                    
+                    core.setOutput("result", `Done`);
+                });
+            });
+        }
+    } catch (error) {
+        core.setFailed(error.message);
+    }
+
+
+} //Close app Pocket
 
 function versionPosMovil() {
-     
+     console.log(`versionPosMovil ---> versionPosMovil <---`); 
 }
 
 
@@ -81,127 +198,15 @@ function validateQA (commitValue) {
   return "";
 };
 
-try {
-    const platform = core.getInput('platform');
-    if (platform === 'android') {
-        // path del gradle
-        const gradlePath = core.getInput('gradlePath');
-        //version actual
-        const versionName = core.getInput('versionNumber');
-        //commit message
-        const commitMessage = core.getInput('commitMessage');
-        //configuration selected
-        const configurationValue = core.getInput('configuration');
-         
-        const inputVersion = core.getInput('numberVersion');
-        
-         const appVersion = core.getInput('aplication');
-        
-         
-       if (appVersion == "Pocket") {
-            console.log(`Flow Pocket ******** `);
-       } else if (appVersion == "PosMovil") {
-            console.log(`Flow PosMovil ******** `);
-       } else {
-            console.log(`Error  ******** ${appVersion} nos existe el app`);
-       }
-        
-            
-        var versionComment = 0
-        if (environmentRegexPattern.test(commitMessage)) {
-          var  versionComment = validateQA(commitMessage);
-        } else if (environmentRegexPattern.test(configurationValue)) {
-           var  versionComment =  validateQA(configurationValue);
-        } else {
-             console.log(`Error no contiene el formato correcto ejemplo: (variantFlavor:QA1@AG1@AQA1@Quality@&&)}`);
-             return
-        }
-         
-        var versionParts = versionName.split('.');
-         console.log(`versionComment : ... ${versionComment}`);
-        if (inputVersion) {
-             console.log(`succes : ... ${inputVersion}`);
-         var versionParts = inputVersion.split('.');
-        } else if (versionComment != "v0") {
-              var versionParts = versionComment.split('.');
-        } else {
-             console.log(`Error : ... ${versionParts}`);
-        }
-        
-        let finalNewVersion = '';
-        let newVersionParts = versionParts[versionParts.length -1];
 
-        let lastPartMayor = 1;
-        let lastPartMinor = 0;
-        let lastPartVersion = 0;
-        
-        if(newVersionParts.length > 0) {
-            lastPartMayor = parseInt(versionParts[0].substring(1));
-            lastPartMinor = parseInt(versionParts[1]);
-            if (inputVersion) { 
-                lastPartVersion = parseInt(versionParts[2]);
-            }  else if (versionComment && versionComment != "v0") {
-               lastPartVersion = parseInt(versionParts[2]);
-            } else {
-               lastPartVersion = parseInt(versionParts[2]) + 1;
-            }
-          
-            if(lastPartVersion > 99) {
-                lastPartVersion = 0;
-                lastPartMinor = lastPartMinor + 1;
-                if(lastPartMinor > 99) {
-                    lastPartMinor = 0;
-                    lastPartMayor = lastPartMayor + 1;
-                }
-            }
-            finalNewVersion = `${lastPartMayor}.${lastPartMinor}.${lastPartVersion}`;
-        }
-
-        let versionCode = '';
-        let versionFinalParts = finalNewVersion.split('.');
-        
-        versionFinalParts.forEach(element => {
-            let newPart = element;
-            if(element.length === 1) {
-                newPart = `${element}0`;
-            }
-            versionCode = `${versionCode}${newPart}`;
-        });
-
-        fs.readFile(gradlePath, 'utf8', function (err, data) {
-         
-            if(!data) {
-                 console.log(`data is Empty ${data}`);
-                console.log(`Error : ... ${err}`);
-            return
-            }
-            
-            newGradle = data;
-            if (versionCode.length > 0)
-                newGradle = newGradle.replace(versionCodeRegexPattern, `$1${versionCode}`);
-            if (versionName.length > 0){
-                newGradle = newGradle.replace(versionNameRegexPattern, `$1\"${finalNewVersion}\"`);
-                console.log(`finalNewVersion: ${finalNewVersion}`);
-                core.setOutput( "new-version-number",`v${finalNewVersion}`);
-            }
-                
-            fs.writeFile(gradlePath, newGradle, function (err) {
-                if (err) throw err;
-                if (versionCode.length > 0) {
-                     console.log(`Successfully override versionCode ${versionCode}`)
-                     console.log(`Version Name : ${versionCode}`);
-                }
-                   
-             
-                if (versionName.length > 0){
-                    console.log(`Successfully override versionName ${versionName}`)
-                    console.log(`Version Name : ${versionName}`);
-                }
-                
-                core.setOutput("result", `Done`);
-            });
-        });
-    }
-} catch (error) {
-    core.setFailed(error.message);
+if (appVersion == "Pocket") {
+    console.log(`Flow Pocket ******** `);
+    versionPocket();
+} else if (appVersion == "PosMovil") {
+    console.log(`Flow PosMovil ******** `);
+    versionPosMovil();
+} else {
+    console.log(`Error  ******** ${appVersion} nos existe el app`);
 }
+        
+
