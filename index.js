@@ -11,7 +11,7 @@ const environmentRegexPattern = /(variantFlavor(?:\s|=)*)(.*)/;
 
 
 function validateQA (commitValue) {
-     // se debe reciir lo sigueinte : QA1@AG1@AQA1@Quality
+     // se debe recibir lo sigueinte : variantFlavor:SIT1@SITAG1@ASIT2@Sit@v8.7.8@&&
      // salidas:
      // Assemble: -assembleQA1AG1AQA1Quality
      // path apk : - QA1AG1ADEB1/quality/app-QA1-AG1-ADEB1-quality.apk
@@ -20,9 +20,10 @@ function validateQA (commitValue) {
        // @AG1     - 1 apigee
        // @AQA1    - 2 Auth0 path
        // @Quality - 3 Environment
+       // @Quality - 4 version app
     
-   // QA1 @ AG1 @ AQA1 @ Quality
-   //Eendpoint @ apigee @ Auth0  @ Environment
+
+   //Eendpoint @ apigee @ Auth0  @ Environment @version
      let variantVar = commitValue.indexOf("variantFlavor:");
      let closeString = commitValue.indexOf("&&");
      let flavorValue = commitValue.substring(variantVar + 14, closeString);
