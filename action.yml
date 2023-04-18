@@ -27,6 +27,10 @@ inputs:
   aplication:  # id of input
     description: 'name aplication'
     required: true
+  typeEnvironment:  # id of input
+    description: 'environment build app'	
+    required: false
+    
     
 outputs:
   new-version-number: # id of output
@@ -35,6 +39,10 @@ outputs:
     description: 'value for assemble'
   final_path_apk: # id of output
     description: 'final path apk'
+  new-version-code: # id of output
+    description: 'The new version code'
+  qa-version-number: # id of output
+    description: 'The version code in ()'
     
 runs:
   using: 'node16'
