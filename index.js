@@ -25,10 +25,7 @@ function versionPocket () {
             const configurationValue = core.getInput('configuration');
              
             const inputVersion = core.getInput('numberVersion');
-            
-             const appVersion = core.getInput('aplication');
-            
-                  
+               
                 
             var versionComment = 0
             if (environmentRegexPattern.test(commitMessage)) {
@@ -198,6 +195,7 @@ function validateQA (commitValue) {
   return "";
 };
 
+ const appVersion = core.getInput('aplication');
 
 if (appVersion == "Pocket") {
     console.log(`Flow Pocket ******** `);
