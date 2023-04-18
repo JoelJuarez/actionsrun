@@ -10,7 +10,7 @@ const versionNameRegexPattern = /(versionName(?:\s|=)*)(.*)/;
 
 const environmentRegexPattern = /(variantFlavor(?:\s|=)*)(.*)/;
 
-const environmentRegexPattern = /(aplication(?:\s|=)*)(.*)/;
+const environmentRegexPatternPos = /(aplication(?:\s|=)*)(.*)/;
 
 
 function versionPocket () {
@@ -150,7 +150,7 @@ function versionPosMovil() {
          
          console.log(`commitMessage -> ${commitMessage}`);
          var versionComment = 0
-        if (environmentRegexPattern.test(commitMessage)){
+        if (environmentRegexPatternPos.test(commitMessage)){
            var versionComment =  getCommentValue(commitMessage);
         }
         
