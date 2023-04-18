@@ -98,7 +98,7 @@ try {
          const appVersion = core.getInput('aplication');
         
          
-       if (appVersion == "pocket") {
+       if (appVersion == "Pocket") {
             console.log(`Flow Pocket ******** `);
        } else if (appVersion == "PosMovil") {
             console.log(`Flow PosMovil ******** `);
