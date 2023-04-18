@@ -11,6 +11,15 @@ const versionNameRegexPattern = /(versionName(?:\s|=)*)(.*)/;
 const environmentRegexPattern = /(variantFlavor(?:\s|=)*)(.*)/;
 
 
+function versionPocket () {
+
+}
+
+function versionPosMovil() {
+     
+}
+
+
 function validateQA (commitValue) {
      // se debe recibir lo sigueinte : variantFlavor:SIT1@SITAG1@ASIT2@Sit@v8.7.8@&&
      // salidas:
@@ -86,8 +95,20 @@ try {
         const configurationValue = core.getInput('configuration');
          
         const inputVersion = core.getInput('numberVersion');
+        
+         const appVersion = core.getInput('aplication');
+        
          
-         var versionComment = 0
+       if (appVersion == "pocket") {
+            console.log(`Flow Pocket ******** `);
+       } else if (appVersion == "PosMovil") {
+            console.log(`Flow PosMovil ******** `);
+       } else {
+            console.log(`Error  ******** ${appVersion} nos existe el app`);
+       }
+        
+            
+        var versionComment = 0
         if (environmentRegexPattern.test(commitMessage)) {
           var  versionComment = validateQA(commitMessage);
         } else if (environmentRegexPattern.test(configurationValue)) {
