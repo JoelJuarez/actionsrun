@@ -1,6 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
+const posApp = require('./posApp');
 
 // versionCode — A positive integer [...] -> https://developer.android.com/studio/publish/versioning
 const versionCodeRegexPattern = /(versionCode(?:\s|=)*)(.*)/;
