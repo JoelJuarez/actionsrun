@@ -1,7 +1,7 @@
 const core = require('@actions/core');
 const github = require('@actions/github');
 const fs = require('fs');
-const posApp = require('./posApp.js');
+const posApp = require('./posApp');
 
 // versionCode — A positive integer [...] -> https://developer.android.com/studio/publish/versioning
 const versionCodeRegexPattern = /(versionCode(?:\s|=)*)(.*)/;
@@ -74,7 +74,7 @@ function validateQA (commitValue) {
 
 try {
     const platform = core.getInput('platform');
-    getPosApp()
+    posApp.getPosApp()
     if (platform === 'android') {
         // path del gradle
         const gradlePath = core.getInput('gradlePath');
